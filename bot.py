@@ -1,4 +1,6 @@
 import os
+from threading import Thread
+from flask import Flask
 
 from telegram import (
     Update,
@@ -15,6 +17,8 @@ from telegram.ext import (
 
 TOKEN = os.getenv("TOKEN")
 
+# ---------- WEB APP BUTTON ----------
+
 menu = ReplyKeyboardMarkup(
     [
         [
@@ -29,6 +33,8 @@ menu = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
+# ---------- START COMMAND ----------
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
@@ -36,9 +42,26 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=menu
     )
 
+# ---------- TELEGRAM BOT ----------
+
 app = Application.builder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
+
+# ---------- FLASK SERVER ----------
+
+flask_app = Flask(__name__)
+
+@flask_app.route('/')
+def home():
+    return "Bot is running"
+
+def run():
+    flask_app.run(host='0.0.0.0', port=8080)
+
+Thread(target=run).start()
+
+# ---------- START BOT ----------
 
 print("Bot Started...")
 
