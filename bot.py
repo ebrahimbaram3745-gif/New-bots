@@ -33,7 +33,7 @@ from telegram.ext import (
 )
 
 import os
-TOKEN = os.getenv("TOKEN")
+TOKEN = os.getenv("8844046661:AAEiVxd8MAEJVhN9wYIXM_AXUExiDcQRucE")
 
 menu = ReplyKeyboardMarkup(
     [
