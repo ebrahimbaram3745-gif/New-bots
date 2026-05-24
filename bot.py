@@ -1,6 +1,17 @@
 import os
-from telegram import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
-from telegram.ext import Updater, CommandHandler
+
+from telegram import (
+    Update,
+    ReplyKeyboardMarkup,
+    KeyboardButton,
+    WebAppInfo
+)
+
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    ContextTypes
+)
 
 TOKEN = os.getenv("TOKEN")
 
@@ -18,19 +29,17 @@ menu = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
-def start(update, context):
-    update.message.reply_text(
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    await update.message.reply_text(
         "🌹 خوش آمدید",
         reply_markup=menu
     )
 
-updater = Updater(TOKEN, use_context=True)
+app = Application.builder().token(TOKEN).build()
 
-dp = updater.dispatcher
-
-dp.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("start", start))
 
 print("Bot Started...")
 
-updater.start_polling()
-updater.idle()
+app.run_polling()
