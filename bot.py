@@ -4,9 +4,8 @@ from flask import Flask
 
 from telegram import (
     Update,
-    ReplyKeyboardMarkup,
-    KeyboardButton,
-    WebAppInfo
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
 )
 
 from telegram.ext import (
@@ -17,38 +16,56 @@ from telegram.ext import (
 
 TOKEN = os.getenv("TOKEN")
 
-# ---------- WEB APP BUTTON ----------
-
-menu = ReplyKeyboardMarkup(
-    [
-        [
-            KeyboardButton(
-                text="📋 منو",
-                web_app=WebAppInfo(
-                    url="https://6a13329df1dc50457d96c0a3--chic-queijadas-d84af7.netlify.app/"
-                )
-            )
-        ]
-    ],
-    resize_keyboard=True
-)
-
-# ---------- START COMMAND ----------
+# ---------------- START ----------------
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
+    keyboard = [
+
+        [
+            InlineKeyboardButton(
+                "یک گیگ 1.5 تون",
+                callback_data="1g"
+            )
+        ],
+
+        [
+            InlineKeyboardButton(
+                "دو گیگ 3 تون",
+                callback_data="2g"
+            )
+        ],
+
+        [
+            InlineKeyboardButton(
+                "سه گیگ 4.5 تون",
+                callback_data="3g"
+            )
+        ],
+
+        [
+            InlineKeyboardButton(
+                "نامحدود 5 تون",
+                callback_data="vip"
+            )
+        ]
+
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     await update.message.reply_text(
-        "🌹 خوش آمدید",
-        reply_markup=menu
+        "💎 ابتدا یکی از پلن ها را انتخاب کنید",
+        reply_markup=reply_markup
     )
 
-# ---------- TELEGRAM BOT ----------
+# ---------------- BOT ----------------
 
 app = Application.builder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 
-# ---------- FLASK SERVER ----------
+# ---------------- FLASK ----------------
 
 flask_app = Flask(__name__)
 
@@ -61,7 +78,7 @@ def run():
 
 Thread(target=run).start()
 
-# ---------- START BOT ----------
+# ---------------- RUN ----------------
 
 print("Bot Started...")
 
