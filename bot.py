@@ -1,3 +1,24 @@
+import os
+
+from flask import Flask
+from threading import Thread
+
+app_flask = Flask('')
+
+@app_flask.route('/')
+def home():
+    return "Bot is running"
+
+def run():
+    port = int(os.environ.get("PORT", 10000))
+    app_flask.run(host='0.0.0.0', port=port)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+keep_alive()
+
 from telegram import (
     Update,
     ReplyKeyboardMarkup,
@@ -11,7 +32,8 @@ from telegram.ext import (
     ContextTypes
 )
 
-TOKEN = "8844046661:AAEiVxd8MAEJVhN9wYIXM_AXUExiDcQRucE"
+import os
+TOKEN = os.getenv("TOKEN")
 
 menu = ReplyKeyboardMarkup(
     [
