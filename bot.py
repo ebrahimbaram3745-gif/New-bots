@@ -1,39 +1,8 @@
 import os
+from telegram import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
+from telegram.ext import Updater, CommandHandler
 
-from flask import Flask
-from threading import Thread
-
-app_flask = Flask('')
-
-@app_flask.route('/')
-def home():
-    return "Bot is running"
-
-def run():
-    port = int(os.environ.get("PORT", 10000))
-    app_flask.run(host='0.0.0.0', port=port)
-
-def keep_alive():
-    t = Thread(target=run)
-    t.start()
-
-keep_alive()
-
-from telegram import (
-    Update,
-    ReplyKeyboardMarkup,
-    KeyboardButton,
-    WebAppInfo
-)
-
-from telegram.ext import (
-    Application,
-    CommandHandler,
-    ContextTypes
-)
-
-import os
-TOKEN = os.getenv("8844046661:AAEiVxd8MAEJVhN9wYIXM_AXUExiDcQRucE")
+TOKEN = os.getenv("TOKEN")
 
 menu = ReplyKeyboardMarkup(
     [
@@ -49,17 +18,19 @@ menu = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-    await update.message.reply_text(
-        "خوش آمدید 🌹",
+def start(update, context):
+    update.message.reply_text(
+        "🌹 خوش آمدید",
         reply_markup=menu
     )
 
-app = Application.builder().token(TOKEN).build()
+updater = Updater(TOKEN, use_context=True)
 
-app.add_handler(CommandHandler("start", start))
+dp = updater.dispatcher
+
+dp.add_handler(CommandHandler("start", start))
 
 print("Bot Started...")
 
-app.run_polling()
+updater.start_polling()
+updater.idle()
