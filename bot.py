@@ -24,28 +24,28 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         [
             InlineKeyboardButton(
-                "یک گیگ 1.5 تون",
+                "🟢 یک گیگ | 1.5 تون",
                 callback_data="1g"
             )
         ],
 
         [
             InlineKeyboardButton(
-                "دو گیگ 3 تون",
+                "🔵 دو گیگ | 3 تون",
                 callback_data="2g"
             )
         ],
 
         [
             InlineKeyboardButton(
-                "سه گیگ 4.5 تون",
+                "🟣 سه گیگ | 4.5 تون",
                 callback_data="3g"
             )
         ],
 
         [
             InlineKeyboardButton(
-                "نامحدود 5 تون",
+                "🔴 نامحدود | 5 تون",
                 callback_data="vip"
             )
         ]
