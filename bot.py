@@ -1477,8 +1477,11 @@ def main():
         save_data("banned.json", banned_users)
 
         await update.message.reply_text("✅ کاربر آن‌بن شد")
-    
-    app.run_polling()
+
+    app.add_handler(CommandHandler("ban", ban))
+    app.add_handler(CommandHandler("unban", unban))
+  
+app.run_polling()
 
 
 if __name__ == "__main__":
