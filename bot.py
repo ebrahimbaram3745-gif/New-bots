@@ -86,6 +86,7 @@ eco_prices = {
 
 vip_prices = {
     "📊 70G | ⏳ 30D | 💰 690T": 690000,
+    "📊 320G | ⏳ 180D | 💰 1390T": 1390000,
 }
 
 
@@ -214,8 +215,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         pass
 
     if user_id not in user_wallets:
-    user_wallets[user_id] = 0
-    save_data("balances.json", user_wallets)
+        user_wallets[user_id] = 0
+        save_data("balances.json", user_wallets)
 
     text = """
 ✨ به Pokémon VPN خوش اومدی
@@ -241,8 +242,8 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = query.from_user.id
 
     if user_id not in user_wallets:
-    user_wallets[user_id] = 0
-    save_data("balances.json", user_wallets)
+        user_wallets[user_id] = 0
+        save_data("balances.json", user_wallets)
 
     # تایید رسید
     if data.startswith("accept_"):
@@ -1168,15 +1169,14 @@ mam4di_1k
             return
 
         else:
-
-    await update.message.reply_text(
+            await update.message.reply_text(
         "❌ کد هدیه نامعتبر است"
-    )
+            )
 
-    if user_id in gift_wait:
-        del gift_wait[user_id]
+            if user_id in gift_wait:
+                del gift_wait[user_id]
 
-    return
+            return
 
 
 
